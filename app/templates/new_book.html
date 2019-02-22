@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<title>New Book</title>
+</head>
+<body >
+{% import 'bootstrap/wtf.html' as wtf %}
+{% extends 'bootstrap/base.html' %}
+{%block content%}
+<div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
+    <div class="w3-display-topleft w3-padding-large w3-xlarge">
+    <i class="fas fa-book-reader fa-4x w3-text-green"></i>
+    </div>
+    </div>
+    <form class="w3-card-4  w3-margin  w3-display-middle w3-padding" style="width:40%" method="post" enctype="multipart/form-data">
+        <h3 class="w3-center">Book details</h3>
+        {{form.hidden_tag()}}
+        {{form.title.label}}
+        {{form.title(class = "form-control")}}
+        {{form.publisher.label}}
+        {{form.publisher(class = "form-control")}}
+        {{form.category.label}}
+        {{form.category(class = "form-control", style="margin-bottom: 15px;")}}
+        <input class="w3-center" type="file" name="photo"  style="margin-bottom:15px" required>
+        {{form.submit(class = "btn btn-sm btn-info")}}
+    </form>
+</div>
+{%endblock%}
+</body>
+
+
+

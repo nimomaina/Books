@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+          integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <title>Other Books</title>
+</head>
+<body>
+{% import "bootstrap/wtf.html" as wtf%}
+{% import 'macros.html' as macro %}
+{% block content%}
+<div class="w3-light-grey">
+<div class="w3-sidebar w3-bar-block w3-card">
+<div class="w3-padding-large w3-xlarge w3-bar-item w3-center">
+<i class="fas fa-book-reader fa-4x w3-text-green w3-bar-item w3-center"></i>
+</div>
+      <hr>
+<a href="/" class="w3-bar-item w3-button w3-green">Home</a>
+<a href="/books/new/" class="w3-bar-item w3-button">Add Book</a>
+<a href="/all_books" class="w3-bar-item w3-button">All books</a>
+    <hr>
+    {% if current_user.is_authenticated %}
+    <a href="/all_books" class="w3-bar-item w3-button">My Profile</a>
+<a href="{{url_for('auth.logout')}}" class="w3-bar-item w3-button">Logout</a>
+    {% else %}
+<a href="{{url_for('auth.login')}}" class="w3-bar-item w3-button">Login</a>
+    {%endif%}
+    <hr>
+<div class="w3-dropdown-hover">
+    <button class="w3-button w3-green">Filter Books by Category</button>
+    <div class="w3-dropdown-content w3-bar-block w3-card-4">
+            <a href="/primary" class="w3-bar-item w3-button w3-black">Primary Books</a>
+            <a href="/secondary" class="w3-bar-item w3-button w3-black">Secondary Books</a>
+            <a href="/novel" class="w3-bar-item w3-button w3-black">Novel</a>
+            <a href="/other" class="w3-bar-item w3-button w3-black">Other</a>
+        </div>
+    </div>
+</div>
+
+
+<div class="w3-content" style="margin-left:20%; height:100vh;">
+
+
+<!-- The Grid -->
+  <div class="w3-row">
+       <h3 class="w3-center w3-bar w3-green">My Profile...</h3>
+    <!-- Left Column -->
+    <div class="w3-col m4 w3-margin">
+      <!-- Profile -->
+      <div class="w3-card w3-round w3-white">
+        <div class="w3-container">
+         <h4 class="w3-center">About me</h4>
+         <p class="w3-center"><img src="http://cdn.onlinewebfonts.com/svg/img_211247.png" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
+         <hr>
+            <p>{{book.user.username}} </p><i class="fas fa-fingerprint"></i>
+            <p>{{book.user.email}} </p><i class="fas fa-envelope"></i>
+
+        </div>
+      </div>
+      <br>
+    <!-- End Left Column -->
+    </div>
+    <!-- Middle Column -->
+    <div class="w3-col m7">
+      <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+        <h4 class="w3-center">My Books</h4><br>
+         <img class="text-center img-responsive w3-margin" src="{{url_for('static', filename=book.book_pic)}}"  width="200px">
+          <h1>{{book.title}}</h1>
+          <footer class="blockquote-footer"> Posted by {{book.user.username}}</footer>
+      </div>
+    <!-- End Middle Column -->
+    </div>
+  <!-- End Grid -->
+  </div>
+</div>
+{% endblock%}
+</body>
+</html>

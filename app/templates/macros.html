@@ -1,0 +1,49 @@
+{% macro display(category_list) %}
+<div class="row">
+    {% if category_list %}
+    {% for category in category_list %}
+    <div class="col-md-3">
+        <div class="panel panel_default">
+            <div class="panel-heading">
+                <div class="img-container">
+                    <img class="text-center img-responsive" src="{{url_for('static', filename=category.book_pic)}}"
+                         alt="" height="100px"
+                         width="100px">
+                </div>
+
+                <h1 id="title">{{category.title}}</h1>
+                <hr>
+
+            </div>
+
+            <div class="panel-body">
+                <blockquote class="blockquote mb-0">
+
+                    <footer class="blockquote-footer"> Posted by {{category.user.username}}</footer>
+                </blockquote>
+
+
+            </div>
+            <div class="panel-footer">
+
+                {% for book in books %}
+
+                {% if current_user.is_authenticated%}
+                <a href="{{url_for('main.update_book',book_id = book.id)}}" class="btn">Update <i
+                        class="fas fa-edit"></i></a>
+                {% endif %}
+                {% endfor %}
+
+
+            </div>
+
+        </div>
+
+    </div>
+    {% endfor %}
+    {% else %}
+    {% endif %}
+</div>
+{% endmacro %}
+
+

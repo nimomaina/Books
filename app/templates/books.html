@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+          integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <title>Other Books</title>
+
+
+</head>
+<style>
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+
+fieldset, label { margin: 0; padding: 0; }
+body{ margin: 20px; }
+h1 { font-size: 1.5em; margin: 10px; }
+
+/****** Style Star Rating Widget *****/
+
+.rating {
+  border: none;
+  float: left;
+}
+
+.rating > input { display: none; }
+.rating > label:before {
+  margin: 5px;
+  font-size: 1.25em;
+  font-family: FontAwesome;
+  display: inline-block;
+  content: "\f005";
+}
+
+.rating > .half:before {
+  content: "\f089";
+  position: absolute;
+}
+
+.rating > label {
+  color: #ddd;
+ float: right;
+}
+
+/***** CSS Magic to Highlight Stars on Hover *****/
+
+.rating > input:checked ~ label, /* show gold star when clicked */
+.rating:not(:checked) > label:hover, /* hover current star */
+.rating:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
+
+.rating > input:checked + label:hover, /* hover current star when changing rating */
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label, /* lighten current selection */
+.rating > input:checked ~ label:hover ~ label { color: #FFED85;  }
+</style>
+<body>
+{% import "bootstrap/wtf.html" as wtf%}
+{% import 'macros.html' as macro %}
+{% block content%}
+<div class="w3-light-grey">
+<div class="w3-sidebar w3-bar-block w3-card">
+<div class="w3-padding-large w3-xlarge w3-bar-item w3-center">
+<i class="fas fa-book-reader fa-4x w3-text-green w3-bar-item w3-center"></i>
+</div>
+      <hr>
+<a href="/" class="w3-bar-item w3-button w3-green">Home</a>
+<a href="/books/new/" class="w3-bar-item w3-button">Add Book</a>
+<a href="/all_books" class="w3-bar-item w3-button">All books</a>
+    <hr>
+    {% if current_user.is_authenticated %}
+    <a href="/all_books" class="w3-bar-item w3-button">My Profile</a>
+<a href="{{url_for('auth.logout')}}" class="w3-bar-item w3-button">Logout</a>
+    {% else %}
+<a href="{{url_for('auth.login')}}" class="w3-bar-item w3-button">Login</a>
+    {%endif%}
+    <hr>
+<div class="w3-dropdown-hover">
+    <button class="w3-button w3-green">Filter Books by Category</button>
+    <div class="w3-dropdown-content w3-bar-block w3-card-4">
+            <a href="/primary" class="w3-bar-item w3-button w3-black">Primary Books</a>
+            <a href="/secondary" class="w3-bar-item w3-button w3-black">Secondary Books</a>
+            <a href="/novel" class="w3-bar-item w3-button w3-black">Novel</a>
+            <a href="/other" class="w3-bar-item w3-button w3-black">Other</a>
+        </div>
+    </div>
+</div>
+<div class="w3-content w3-container " style="margin-left:20%;height:100vh">
+<div class="w3-row ">
+    <h3 class="w3-center w3-bar w3-green">You Picked...</h3>
+<div class="w3-margin w3-third w3-card-4 w3-animate-right" style="margin-left:25%">
+<img class="" src="{{url_for('static', filename=book.book_pic)}}" style="width:100%">
+</div>
+    <div class="w3-margin w3-half">
+        <br><br><br>
+<h5>Title:{{book.title}}</h5>
+<h6> Publisher: {{book.publisher}}</h6>
+<hr class="w3-border w3-text-green">
+<fieldset class="rating">
+    <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
+    <input type="radio" id="star4half" name="rating" value="4 and a half" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+    <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+    <input type="radio" id="star3half" name="rating" value="3 and a half" /><label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+    <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
+    <input type="radio" id="star2half" name="rating" value="2 and a half" /><label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+    <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+    <input type="radio" id="star1half" name="rating" value="1 and a half" /><label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+    <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+    <input type="radio" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+</fieldset>
+<hr  class="w3-border w3-text-green">
+<p> Posted by:{{book.user.username}}</p>
+<div class="w3-bar w3-center">
+<a href="{{url_for('main.get_book',book_id = book.id)}}" class="w3-button w3-green">Get Book <i
+class="fas fa-arrow-right"></i></a>
+{% if current_user.is_authenticated%}
+<a href="{{url_for('main.update_book',book_id = book.id)}}" class="w3-button w3-black">Update Book <i
+class="fas fa-edit"></i></a>
+{% endif %}
+    </div>
+</div>
+</div>
+</div>
+
+{% endblock%}
+</body>
+</html>

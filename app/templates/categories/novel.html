@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+          integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <title>Other Books</title>
+</head>
+<body>
+{% import "bootstrap/wtf.html" as wtf%}
+{% import 'macros.html' as macro %}
+{% block content%}
+<div class="w3-light-grey">
+<div class="w3-sidebar w3-bar-block w3-card">
+<div class="w3-padding-large w3-xlarge w3-bar-item w3-center">
+<i class="fas fa-book-reader fa-4x w3-text-green w3-bar-item w3-center"></i>
+</div>
+      <hr>
+<a href="/" class="w3-bar-item w3-button w3-green">Home</a>
+<a href="/books/new/" class="w3-bar-item w3-button">Add Book</a>
+<a href="/all_books" class="w3-bar-item w3-button">All books</a>
+    <hr>
+    {% if current_user.is_authenticated %}
+    <a href="/all_books" class="w3-bar-item w3-button">My Profile</a>
+<a href="{{url_for('auth.logout')}}" class="w3-bar-item w3-button">Logout</a>
+    {% else %}
+<a href="{{url_for('auth.login')}}" class="w3-bar-item w3-button">Login</a>
+    {%endif%}
+    <hr>
+<div class="w3-dropdown-hover">
+    <button class="w3-button w3-green">Filter Books by Category</button>
+    <div class="w3-dropdown-content w3-bar-block w3-card-4">
+            <a href="/primary" class="w3-bar-item w3-button w3-black">Primary Books</a>
+            <a href="/secondary" class="w3-bar-item w3-button w3-black">Secondary Books</a>
+            <a href="/novel" class="w3-bar-item w3-button w3-black">Novel</a>
+            <a href="/other" class="w3-bar-item w3-button w3-black">Other</a>
+        </div>
+    </div>
+</div>
+<div class="w3-content" style="margin-left:20%; height:100vh">
+    <div class="w3-row">
+    <h3 class="w3-center w3-bar w3-green">Novels</h3>
+    <div class="w3-col m3 w3-img w3-card-4 w3-margin w3-third w3-white w3-animate-right">
+    <a href="{{url_for('static', filename=book.book_pic)}}"><img
+    src="{{url_for('static', filename=book.book_pic)}}" style="width:100%; height:200px"></a>
+    <div class="w3-container">
+   <div class="row">
+    {% if novel %}
+    {% for category in novel %}
+    <div class="col-md-3">
+        <div class="panel panel_default">
+            <div class="panel-heading">
+                <div class="img-container">
+                    <img class="text-center img-responsive" src="{{url_for('static', filename=category.book_pic)}}"
+                         alt="" height="100px"
+                         width="100px">
+                </div>
+
+                <h1 id="title">{{category.title}}</h1>
+                <hr>
+
+            </div>
+
+            <div class="panel-body">
+                <blockquote class="blockquote mb-0">
+
+                    <footer class="blockquote-footer"> Posted by {{category.user.username}}</footer>
+                </blockquote>
+
+
+            </div>
+            <div class="panel-footer">
+
+                {% for book in books %}
+
+                {% if current_user.is_authenticated%}
+                <a href="{{url_for('main.update_book',book_id = book.id)}}" class="btn">Update <i
+                        class="fas fa-edit"></i></a>
+                {% endif %}
+                {% endfor %}
+
+
+            </div>
+
+        </div>
+
+    </div>
+    {% endfor %}
+    {% else %}
+    {% endif %}
+</div>
+    </div>
+    </div>
+    </div>
+</div>
+</div>
+{% endblock%}
+</body>
+</html>

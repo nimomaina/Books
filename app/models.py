@@ -21,10 +21,11 @@ class Book(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    details = db.Column(db.String(), index=True, nullable=False)
     title = db.Column(db.String(100), nullable=False)
-    book_pic_path = db.Column(db.String(),default = 'default.jpg')
-    review = db.relationship('Comment', backref='pitch', lazy='dynamic')
+    category = db.Column(db.String(255))
+    publisher = db.Column(db.String(255))
+    book_pic = db.Column(db.String(),default = 'default.jpg')
+    review = db.relationship('Review', backref='blog', lazy='dynamic')
 
 
 class User(UserMixin, db.Model):
@@ -36,9 +37,8 @@ class User(UserMixin, db.Model):
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String(), default='default.jpg')
     pass_secure = db.Column(db.String(255))
-    blog = db.relationship('Blog', backref='user', lazy='dynamic')
+    book = db.relationship('Book', backref='user', lazy='dynamic')
 
-    # comment = db.relationship('Comment', backref='user', lazy='dynamic')
 
     @property
     def password(self):
