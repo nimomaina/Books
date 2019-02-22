@@ -9,16 +9,12 @@ from datetime import datetime
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-
-
-
-class Book(db.Model):
+class GoodBook():
     '''
-    Class blog that hold all blog data
+    News class to define News Objects
     '''
-    pass
 
-class User(UserMixin, db.Model):
-    pass
-
+    def __init__(self, title, description):
+        self.title = title
+        self.description = description
 
