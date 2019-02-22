@@ -3,7 +3,8 @@ class Config:
     '''
     General configuration parent class
     '''
-
+    GOODREADS_API_BASE_URL = "https://www.googleapis.com/books/v1/volumes?q={}"
+    GOODREADS_API_KEY ="God's Work"
 
 
 class ProdConfig(Config):

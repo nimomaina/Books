@@ -1,6 +1,4 @@
-#!/bin/sh
-'''exec' "/home/wairimu/Documents/moringa school projects/core/Flask/Blog/virtual/bin/python3.6" "$0" "$@"
-' '''
+#!/root/Desktop/Books/virtual/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

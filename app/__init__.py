@@ -18,16 +18,17 @@ login_manager.session_protection = 'strong'
 login_manager.login_view = 'auth.login'
 
 def create_app(config_name):
-    app = Flask(__name__)
+    app = Flask(__name__, instance_relative_config = True)
     # simple.init_app(app)
     # mail.init_app(app)
 
     # Creating the app configurations
     app.config.from_object(config_options[config_name])
+    app.config.from_pyfile('config.py')
     # config_options[config_name].init_app(app)
 
     # configure UploadSet
-    configure_uploads(app, photos)
+    # configure_uploads(app, photos)
 
     # Initializing flask extensions
     bootstrap.init_app(app)
