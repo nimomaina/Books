@@ -2,14 +2,38 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <title>Title</title>
 </head>
 <body>
+<div class="w3-row-padding w3-padding-16 " id="food">
+{% for book in books["items"] %}
 
-    {% for book in books["items"] %}
+    <div class="w3-half">
+      <div class="w3-card-4 w3-margin w3-round">
+    {%if book.volumeInfo.imageLinks.thumbnail%}
 
-        <p>title: {{ book.volumeInfo.title }}</p>
+    <div class="w3-center" style="min-height:270px">
+        <img class="w3-margin" src="{{book.volumeInfo.imageLinks.thumbnail}}" >
+    </div>
+          <div>
+Title: {{book.volumeInfo.title}}<br>
+Accessibility:
+{%if book.accessInfo.country == "KE"%}
+The book can be Accessed from your location<br>
+{%else%}
+ The book cannot be Accessed from your location<br>
+{%endif%}
+Author(s):
+{%for i in book.volumeInfo.authors%}
+{{i}},
+{%endfor%}
+{% endif %}
+          </div>
+    </div>
+    </div>
 
-    {% endfor %}
+{% endfor %}
+</div>
 </body>
 </html>

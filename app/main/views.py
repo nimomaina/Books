@@ -6,7 +6,7 @@ from flask_login import login_required, current_user
 from flask.views import View, MethodView
 from .. import db
 from datetime import datetime
-from ..request import get_books
+from ..request import random_books
 
 
 @main.route('/')
@@ -18,7 +18,8 @@ def index():
 @main.route('/goodbooks')
 def goodbooks():
 
-    result = get_books()
+    result = random_books()
+
 
     return render_template('goodbooks.html', books = result)
 
